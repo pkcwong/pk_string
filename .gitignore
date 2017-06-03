@@ -3,3 +3,4 @@
 pk_string/Makefile.win
 pk_string/pk_string.dev
 pk_string/main.c
+pk_string/pk_string.layout
