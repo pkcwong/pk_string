@@ -18,7 +18,7 @@ struct String_t
 	string (*insert)(string this, size_t pos, const string str);
 	string (*erase)(string this, size_t iterator_start, size_t iterator_end);
 	string (*concat)(const string str1, const string str2);
-	string (*substr)(const string str, size_t iterator_start, size_t iterator_end);
+	string (*substr)(const string this, size_t iterator_start, size_t iterator_end);
 	const char* (*c_str)(const string this);
 	size_t (*length)(const string this);
 };
