@@ -7,6 +7,7 @@ struct String_t String = {
 	.append = &str_append,
 	.insert_c = &str_insert_c,
 	.insert = &str_insert,
+	.erase = &str_erase,
 	.concat = &str_concat,
 	.substr = &str_substr,
 	.c_str = &str_c_str,
@@ -64,6 +65,7 @@ string str_insert_c(string this, size_t pos, const char* str)
 		(*this)[i + pos] = str[i];
 	}
 	*header = *header + strlen(str);
+	return this;
 }
 
 string str_insert(string this, size_t pos, const string str)
@@ -79,6 +81,19 @@ string str_insert(string this, size_t pos, const string str)
 		(*this)[i + pos] = String.c_str(str)[i];
 	}
 	*header = *header + String.length(str);
+	return this;
+}
+
+string str_erase(string this, size_t iterator_start, size_t iterator_end)
+{
+	size_t* header = (size_t*)(this) - 1;
+	for (int i = iterator_start; i != String.length(this) + iterator_start - iterator_end; i++)
+	{
+		(*this)[i] = (*this)[iterator_end - iterator_start + i];
+	}
+	*this = realloc(*this, String.length(this) + iterator_start - iterator_end);
+	*header = *header + iterator_start - iterator_end;
+	return this;
 }
 
 string str_concat(const string str1, const string str2)
@@ -99,7 +114,7 @@ string str_concat(const string str1, const string str2)
 	return data;
 }
 
-string str_substr(const string this, int iterator_start, int iterator_end)
+string str_substr(const string this, size_t iterator_start, size_t iterator_end)
 {
 	size_t* header = malloc(sizeof(size_t) + sizeof(char**));
 	char** data = (char**)(header + 1);
